@@ -27,6 +27,16 @@ repositories {
 dependencies {
 //    implementation 'org.projectlombok:lombok:1.18.18'
     compile('org.springframework.boot:spring-boot-starter-web')
+
+    // 롬복
     compile('org.projectlombok:lombok')
+
+    // jpa
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+
+    // h2
+    compile("com.h2database:h2")
+
+
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
