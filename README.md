@@ -115,4 +115,23 @@
 - Entity 클래스에서는 절대 Setter 메소드를 만들지 않는다. 대신, 해당 필드의 값 변경이 필요하면 명확히 그 목적과 의도를 나타낼 수 있는 메소드를 추가해야 한다.
 - Setter가 없기 때문에 생성자를 통해 최종값을 채운 후 DB에 삽입한다.
 - @Builder를 통해 제공되는 빌더 클래스를 이용하여 지금 채워야 할 필드가 무엇인지 명확히 지정할 수 있다.
+  
+<br>
 
+### [ Day - 07/21(수) ]
+
+<br>
+
+- MyBatis에서 Dao라고 불리는 것인 JPA에서는 Repository라고 부르며, 인터페이스로 생성된다.
+  - 인터페이스 생성 후 JpaRepository<Entity 클래스, PK 타입>를 상송하면 기본 CRUD 메소드가 자동으로 생성된다.
+  - @Repository도 추가할 필요가 없다.
+  - Entity 클래스와 기본 Entity Repository는 함께 위치해야 한다.
+- JpaRepository의 save 메소드
+  - 테이블에 insert/update 쿼리를 실행한다.
+  - id 값이 있다면 update, 없다면 insert 쿼리가 실행된다.
+- JpaRepository의 finaALL 메소드
+  - 테이블에 있는 모든 데이터를 조회해오는 메소드.
+- JPA에서 실행된 쿼리 보는 방법
+  - application.properties에서 spring.jpa.show_sql=true 를 입력한다.
+  - MySQL 버전으로 사용하기 위해서는 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialect 를 입력한다.
+  
