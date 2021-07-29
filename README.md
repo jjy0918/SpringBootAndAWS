@@ -134,4 +134,46 @@
 - JPA에서 실행된 쿼리 보는 방법
   - application.properties에서 spring.jpa.show_sql=true 를 입력한다.
   - MySQL 버전으로 사용하기 위해서는 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialect 를 입력한다.
-  
+
+### [ Day - 07/29(목) ]
+
+<br>
+
+- Spring 웹 계층 에는 Web Layer, Service Layer, Repository Layer, DTOs, Domain Model이 있다.
+- Web Layer
+  - 흔히 사용하는 컨트롤러(@Controller)와 JSP/Freemaker 등의 뷰 템플릿 영역
+  - 이외에도 필터(@Filter), 인터셉터, 컨트롤러 어드바이스(@ControllerAdvice) 등 외부 요청과 응답에 대한 전반적인 영역을 이야기한다.
+- Service Layer
+  - @Service에 사용되는 서비스 영억.
+  - 일반적으로 Controller와 Dao의 중간 영역에서 사용된다.
+  - @Transactional이 사용되어야 하는 영역이기도 한다.
+- Repository Layer
+  - Database와 같이 데이터 저장소에 접근하는 영역이다.
+  - 기존에 개발했다면, Dao(Data Access Object) 영역으로 이해하면 된다.
+- Dtos
+  - Dto(Data Transfer Object)는 계층 간에 데이터 교환을 위한 객체를 이야기하며, Dtos는 이들의 영역을 이야기한다.
+  - 예를 들어 뷰 템플릿 엔진에서 사용될 객체나 Repository Layer에서 결과로 넘겨준 객체 등이 이들을 이야기한다.
+- Domain Model
+  - 도메인이라 불리는 개발 대상을 만든 모든 사람이 동일한 관점에서 이해할 수 있고 공유할 수 있도록 단순화시킨 것을 도메인 모델이라고 한다.
+  - 이를테면 택시 앱이라고 하면 배차, 탑승, 요금 등이 모두 도메인이 될 수 있다.
+  - @Entity를 사용해봤다면, @Entity가 사용된 영역 역시 도메인 모델이라 이해하면 된다.
+  - 다만, 무조건 데이터베이스의 테이블 관계가 있어야만 하는 것은 아니다.
+  - VO 처럼 값 객체들도 이 영역에 해당하기 때문이다.
+
+<br>
+
+- Bean 주입
+  - Bean 주입 방법 : @Autowired, setter, 생성자
+  - 가장 권장하는 방식은 생성자로 주입 받는 방식이다.
+  - 롬복의 @RequiredArgsContructor를 이용하면 final이 선언된 필드를 인자값으로 하는 생성자 주입을 간단하게 처리할 수 있다.
+  - 생성자를 직접 안 쓰고 롬복 어노테이션을 사용하는 이유는 클래스의 의존성 관계가 변경될 때마다 생성자 코드를 계속해서 수정하는 번거로움을 해결할 수 있기 때문이다.
+- 절대로 Entity 클래스를 Request/Response 클래스로 사용해서는 안된다.
+  - Entity 클래스는 데이터베이스와 맞닿는 핵심 클래스이다.
+- JPA Auditing으로 생성시간/수정시간 자동화
+  - java8부터는 Date가 아닌 LocalDate, LocalDateTime을 사용하는 것이 좋다.
+  - @MappedSuperclass : JPA Entity 클래스들이 BaseTimeEntity를 상속할 경우 필드들도 칼럼으로 인식하도록 한다.
+  - @EntityListners(AudingEntityListner.class) : BaseTimeEntity 클래스에 Auditing 기능을 포함시킨다.
+  - @CreateDate : Entity가 생성되어 저장될 때 시간이 자동 저장된다.
+  - @LastModifiedDate : 조회한 Entity의 값을 변경할 때 시간이 자동 저장된다.
+  - 자동화가 필요한 Entity는 BaseTimeEntity를 상속 받는다.
+  - JPA Auditing 어노테이션들을 모두 활성화 하기 위해서는 Aplication 클래스에 @EnableJpaAuditing 어노테이션을 추가해야 한다.
